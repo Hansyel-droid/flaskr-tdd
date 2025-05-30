@@ -38,9 +38,9 @@ def add_entry():
 def login():
     error = None
     if request.method == "POST":
-        if request.form["username"] != "admin":  # or get from config
+        if request.form["username"] != "admin":
             error = "Invalid username"
-        elif request.form["password"] != "admin":  # or get from config
+        elif request.form["password"] != "admin":
             error = "Invalid password"
         else:
             session["logged_in"] = True
@@ -139,6 +139,13 @@ def delete_note(note_id):
     db.session.delete(note)
     db.session.commit()
     return jsonify({"message": "Note deleted"}), 200
+
+
+# === Swagger UI Route ===
+
+@app.route("/docs")
+def swagger_ui():
+    return app.send_static_file("swagger-ui/index.html")
 
 
 if __name__ == "__main__":
